@@ -1,0 +1,98 @@
+package SOS;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+public class StreamXML 
+{
+	/*** * @param path 完整路径 如 c:\test.txt
+	* @param charset 字符集，若为null采用平台默认字符集
+	* @throws IOException
+	*/
+	public String getString(String path, String filename,String charset) throws IOException {
+		String msg="";
+		BufferedReader reader=null;
+		InputStreamReader isr=null;
+		try {
+			if(null!=charset){
+				isr=new InputStreamReader(new FileInputStream(path+filename),charset);
+			}else{
+				isr=new InputStreamReader(new FileInputStream(path+filename));
+			}
+			reader=new BufferedReader(isr);
+			String tmp=reader.readLine();
+			while(null!=tmp){
+				msg+=tmp+"\n";
+				tmp=reader.readLine();
+			}
+		} finally{
+			if(null!=reader){
+				reader.close();
+			}
+		}
+		//拼凑RegisterSensor
+		String RegisterStrHead="";
+		String RegisterStrFoot="";
+		RegisterStrHead+="<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+"\n";
+		RegisterStrHead+="<RegisterSensor service=\"SOS\" version=\"1.0.0\""+"\n";
+		RegisterStrHead+="xmlns=\"http://www.opengis.net/sos/1.0\""+"\n";
+		RegisterStrHead+="xmlns:swe=\"http://www.opengis.net/swe/1.0.1\""+"\n";
+		RegisterStrHead+="xmlns:ows=\"http://www.opengeospatial.net/ows\""+"\n";
+		RegisterStrHead+="xmlns:xlink=\"http://www.w3.org/1999/xlink\""+"\n";
+		RegisterStrHead+="xmlns:gml=\"http://www.opengis.net/gml\""+"\n";
+		RegisterStrHead+="xmlns:ogc=\"http://www.opengis.net/ogc\""+"\n";
+		RegisterStrHead+="xmlns:om=\"http://www.opengis.net/om/1.0\""+"\n";
+		RegisterStrHead+="xmlns:sml=\"http://www.opengis.net/sensorML/1.0.1\""+"\n";
+		RegisterStrHead+="xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""+"\n";
+		RegisterStrHead+="xsi:schemaLocation=\"http://www.opengis.net/sos/1.0"+"\n";
+		RegisterStrHead+="http://schemas.opengis.net/sos/1.0.0/sosRegisterSensor.xsd"+"\n";
+		RegisterStrHead+="http://www.opengis.net/om/1.0"+"\n";
+		RegisterStrHead+="http://schemas.opengis.net/om/1.0.0/extensions/observationSpecialization_override.xsd\">"+"\n";
+		RegisterStrHead+="<SensorDescription>"+"\n";
+		
+		RegisterStrFoot+="</SensorDescription>"+"\n";
+		RegisterStrFoot+="<ObservationTemplate>"+"\n";
+		RegisterStrFoot+=" <om:Measurement>"+"\n";
+		RegisterStrFoot+="  <om:samplingTime/>"+"\n";
+		RegisterStrFoot+="  <om:procedure/>"+"\n";
+		RegisterStrFoot+="	<om:observedProperty/>"+"\n";
+		RegisterStrFoot+="  <om:featureOfInterest></om:featureOfInterest>"+"\n";
+		RegisterStrFoot+="  <om:result uom=\"\"></om:result>"+"\n";
+		RegisterStrFoot+=" </om:Measurement>"+"\n";
+		RegisterStrFoot+="</ObservationTemplate>"+"\n";
+		RegisterStrFoot+="</RegisterSensor>"+"\n";
+		msg=RegisterStrHead+msg+RegisterStrFoot;
+		//--------------msg为准备拼凑的，msg_show是给网页显示的----------------
+		String msg_show=msg;
+		msg_show=msg_show.replace("<", "&lt");
+		msg_show=msg_show.replace(">", "&gt");
+		System.out.println("msg:"+msg);
+		
+		//-----------这里应该将字符串发送给sos-------------
+		return msg_show;
+	}
+	/*** 
+	* @param path 文件绝对路径 如 c:\test.txt，若文件存在，则覆盖内容
+	* @param content 要写入文件的内容
+	* @param charset 字符集，若为null,则采用平台默认字符集
+	* @throws IOException*/
+	public void write(String path, String content, String charset)throws IOException {
+		FileOutputStream fos = new FileOutputStream(path);
+		OutputStreamWriter writer = null;
+		try {
+			if (null != charset) {
+				writer = new OutputStreamWriter(fos, charset);
+			} else {
+				writer = new OutputStreamWriter(fos);
+			}
+			writer.append(content);
+		} finally {
+			if (null != writer) {
+			writer.flush();writer.close();
+			}
+		}
+	}
+}

@@ -1,0 +1,13 @@
+		.menubar{position:absolute;top:10px;width:100px;height:20px;cursor:default;
+	    border-width:1px;border-style:outset;color:#99FFFF;background:#669900}
+		.menu{position:absolute;top:30px;width:140px;display:none;border-width:1px;
+		border-style:outset;border-color:white silver silver white;background:#333399;padding:15px; color:#99FFFF}
+		.menu A{text-decoration;none;color:#99ffff;}
+		.menu A:hover{color:#99FFFF;}
+		.menu a:visited{color:#99FFFF;text-decoration:none;}
+		.menu a:link{color:#99FFFF;text-decoration:none;}
+		.menubar a:visited{color:#99FFFF;text-decoration:none;}
+		.menubar a:link{color:#99FFFF;text-decoration:none;}
+		.menu3{display:none}
+		.menu3 a:visited{color:#FF6;text-decoration:none;}
+		.menu3 a:link{color:#FF6;text-decoration:none;}

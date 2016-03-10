@@ -1,0 +1,61 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="WebApplication1.WebForm1" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <script src="script/jquery-1.4.1.min.js" type="text/javascript"></script>
+    <script src="script/jquery.xmlns.js" type="text/javascript"></script>
+    <script language="javascript" type="text/javascript">
+        $(function () {
+
+            var div = $("#placeholder");
+
+            // 处理不带命名空间的xml
+            $.get("SimpleRegister/test.xml", null, function (data) {
+                var employees = $("Employee", data); //找到所有的Employee节点
+		
+                var ul = $("<ul />");
+
+                employees.each(function () {
+                    $("<li />").text($(this).attr("firstName") + " " + $(this).attr("lastName")).appendTo(ul);// 将每一行数据构造一个新的li标签，并且将其插入到ul中
+
+                });
+
+                ul.appendTo(div);
+            });
+
+
+            $("<br />").appendTo(div);
+
+     
+            $.xmlns["d"] = "http://tech.xizhang.com";
+            // 处理带命名空间的xml
+            $.get("SimpleRegister/test.xml", null, function (data) {
+                var employees = $("d|Employee", data); //找到所有的Employee节点
+
+                var ul = $("<ul />");
+
+                employees.each(function () {
+                   // $("<li />").text($(this).attr("firstName") + " " + $(this).attr("lastName")).appendTo(ul);
+					var s=$("<li />").text($(this).attr("firstName") + " " + $(this).attr("lastName"));
+					s.appendTo(ul);
+                });
+
+                ul.appendTo(div);
+
+            });
+
+
+        });
+    </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div id="placeholder">
+    
+    </div>
+    </form>
+</body>
+</html>

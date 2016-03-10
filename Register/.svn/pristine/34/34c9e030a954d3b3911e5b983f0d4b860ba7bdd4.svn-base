@@ -1,0 +1,16 @@
+	$(".submit").click(function(){
+		var ajaxUrl = "linkControl.jsp";
+		$.ajax({
+			type:"POST",
+			dateType:"html",
+			url: ajaxUrl,
+			data: $("#linkControlForm").serialize(),
+			success: function(response){
+				alert("修改成功");
+				window.location.reload();
+			},
+			error:function(response){
+				alert("error:"+response.responseText);
+			}
+		});
+	});

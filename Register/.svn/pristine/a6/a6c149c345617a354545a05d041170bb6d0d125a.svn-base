@@ -1,0 +1,117 @@
+package SOS;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
+public class StreamXML 
+{
+	/*** * @param path 完整路径 如 c:\test.txt
+	* @param charset 字符集，若为null采用平台默认字符集
+	* @throws IOException
+	*/
+	public String getString(String path, String filename,String charset) throws IOException {
+		String msg="";
+		String msg_full="";
+		int num=0;
+		BufferedReader reader=null;
+		InputStreamReader isr=null;
+		try { 
+				isr=new InputStreamReader(new FileInputStream(path+filename));
+			reader=new BufferedReader(isr);
+			String tmp=reader.readLine();
+			while(null!=tmp){
+				if(num!=0){
+				msg+=tmp+"\n";
+				tmp=reader.readLine();
+				}else{
+					msg+="<sml:SensorML version=\"1.0.1\">\n";
+					tmp=reader.readLine();
+					num++;
+				}
+			}
+		} finally{
+			if(null!=reader){
+				reader.close();
+			}
+		}
+
+		//拼凑RegisterSensor
+		String RegisterStrHead="";
+		String RegisterStrFoot="";
+		RegisterStrHead+="<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+"\n";
+		RegisterStrHead+="<RegisterSensor service=\"SOS\" version=\"1.0.0\" xmlns=\"http://www.opengis.net/sos/1.0\" xmlns:swe=\"http://www.opengis.net/swe/1.0.1\" xmlns:ows=\"http://www.opengeospatial.net/ows\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:om=\"http://www.opengis.net/om/1.0\" xmlns:sml=\"http://www.opengis.net/sensorML/1.0.1\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/sos/1.0"+"\n";
+		RegisterStrHead+="http://schemas.opengis.net/sos/1.0.0/sosRegisterSensor.xsd http://www.opengis.net/om/1.0 http://schemas.opengis.net/om/1.0.0/extensions/observationSpecialization_override.xsd\">"+"\n";
+		RegisterStrHead+="	<SensorDescription>"+"\n";
+		
+		RegisterStrFoot+="	</SensorDescription>"+"\n";
+		RegisterStrFoot+="	<ObservationTemplate>"+"\n";
+		RegisterStrFoot+="		<om:Observation>"+"\n";
+		RegisterStrFoot+="			<om:samplingTime/>"+"\n";
+		RegisterStrFoot+="			<om:procedure/>"+"\n";
+		RegisterStrFoot+="			<om:observedProperty/>"+"\n";
+		RegisterStrFoot+="			<om:featureOfInterest/>"+"\n";
+		RegisterStrFoot+="			<om:result/>"+"\n";
+		RegisterStrFoot+="		</om:Observation>"+"\n";
+		RegisterStrFoot+="	</ObservationTemplate>"+"\n";
+		RegisterStrFoot+="</RegisterSensor>"+"\n";
+		msg=RegisterStrHead+msg+RegisterStrFoot;
+		//--------------msg为准备拼凑的，msg_show是给网页显示的----------------
+		String msg_show=msg;
+		msg_show=msg_show.replace("<", "&lt");
+		msg_show=msg_show.replace(">", "&gt");
+
+		//-----------这里应该将字符串发送给sos-------------
+		String return_msg=send(filename,msg);
+		return return_msg;
+	};
+	
+	
+	public String send(String filename,String msg){
+		HttpURLConnection httpURLConnection;
+		InputStream in=null;
+		BufferedReader br= null;
+		String return_str ="";
+		StringBuffer responseMessage= null;
+		  try{
+		  URL url = new URL("http://202.121.197.111:84/SOS_E/sos");
+		  URLConnection conn=null;
+		  conn=url.openConnection();
+		  conn.setDoOutput(true);
+		  
+		  OutputStreamWriter writer=null;
+		  writer = new OutputStreamWriter(conn.getOutputStream());
+		  writer.write(msg);
+		  writer.flush();
+		  
+		  String line;
+		  List<String> info = new ArrayList<String>() ;
+		  BufferedReader reader=null;
+		  reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		  	while((line=reader.readLine())!=null){
+		  		info.add(line);
+		  	}
+		  writer.close();
+		  reader.close();
+		  StringBuffer sb=new StringBuffer();
+		  if(info!=null){
+			  for(int i=0; i<info.size();i++){
+				  sb.append(info.get(i));
+				  sb.append("\n");
+			  }
+		  }
+		  return_str=sb.toString();
+		  }finally{
+				return (filename+":"+return_str+msg);
+		  }
+	}
+}

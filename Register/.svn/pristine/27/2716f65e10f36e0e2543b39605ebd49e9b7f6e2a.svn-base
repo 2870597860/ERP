@@ -1,0 +1,117 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<%@ page import="java.io.BufferedReader" %>
+<%@ page import="java.io.FileInputStream" %>
+<%@ page import="java.io.IOException" %>
+<%@ page import="java.io.InputStreamReader" %>
+<%@ page import="java.io.OutputStreamWriter" %>
+<%@ page import="java.net.URL" %>
+<%@ page import="java.net.URLConnection" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.io.*,java.util.*" %>
+<%@ page import="SOS.*" %>
+
+<%
+class getCapabilities{
+	//拼凑GetCapabilities
+	public String getCapabilities(){
+		String getC="";
+		getC+="<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+"\n";
+		getC+="<GetCapabilities xmlns=\"http://www.opengis.net/sos/1.0\""+"\n";
+		getC+="	xmlns:ows=\"http://www.opengis.net/ows/1.1\""+"\n";
+		getC+="	xmlns:ogc=\"http://www.opengis.net/ogc\""+"\n";
+		getC+="	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""+"\n";
+		getC+="	xsi:schemaLocation=\"http://www.opengis.net/sos/1.0"+"\n";
+		getC+="	http://schemas.opengis.net/sos/1.0.0/sosGetCapabilities.xsd\""+"\n";
+		getC+="	service=\"SOS\">"+"\n";
+		getC+="	<ows:AcceptVersions>"+"\n";
+		getC+="		<ows:Version>1.0.0</ows:Version>"+"\n";
+		getC+="	</ows:AcceptVersions>"+"\n";
+		getC+="	<ows:Sections>	"+"\n";
+		getC+="		<ows:Section>OperationsMetadata</ows:Section>"+"\n";
+		getC+="	</ows:Sections>"+"\n";
+		getC+="</GetCapabilities>"+"\n";
+		return getC;
+	}
+	//发送getCapabilities至SOS，获取返回值
+	public String send(String msg,String urlIn) throws IOException{
+		URL url = new URL(urlIn);
+		URLConnection conn=null;
+		conn=url.openConnection();
+		conn.setDoOutput(true);
+		
+		OutputStreamWriter writer=null;
+		writer = new OutputStreamWriter(conn.getOutputStream());
+		writer.write(msg);
+		writer.flush();
+		  
+		String line;
+		List<String> info = new ArrayList<String>() ;
+		BufferedReader reader=null;
+		reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		while((line=reader.readLine())!=null){
+		 info.add(line);
+		}
+		  writer.close();
+		  reader.close();
+		  StringBuffer sb=new StringBuffer();
+		  if(info!=null){
+			  for(int i=0; i<info.size();i++){
+				  sb.append(info.get(i));
+				  sb.append("\n");
+			  }
+		  }
+		  return sb.toString();
+	}
+}
+%>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Insert title here</title>
+<link href="../css/Registed_Sensor.css" rel="stylesheet" type="text/css" />
+</head>
+<header>
+	SOS中已注册传感器
+</header>
+
+<body>
+	<div class="main">
+		<div class="table">
+			<table border="1" width="100%">
+				<tr>
+					<td>传感器名称</td><td>传感器类型</td><td>传感器ID</td><td>注册时间</td><td>观测属性</td>
+				</tr>
+				<%
+					//嵌入获取以上信息，分批次插入tr
+									getCapabilities getC = new getCapabilities();
+									String s = getC.getCapabilities();//获取GetCapabilities()操作，赋值给s
+								//发送s值给sos，并获取返回值getC_response
+									String getC_response = getC.send(s,"http://202.121.197.111:84/SOS_E/sos");
+								//查找路径_sos:capabilities->ows:operationsmetadata->ows:operation name="DescribeSensor"->ows:parameter name="procedue"->allowedvalues->ows:values
+								//	String names=getC_response.split("<ows:parameter name=\"procedure\">")[1].split("</ows:parameter name=\"procedure\">")[0];
+									FindNodeFromString fnfs=new FindNodeFromString();
+									ArrayList names = fnfs.findNode("allowedvalues",getC_response);//names就是已注册传感器名字的ArrayList
+									
+								//循环输出至表格中
+									Iterator <String> it = names.iterator();
+									while(it.hasNext()){
+										//	执行DescribeSensor操作
+											ArrayList vals = new ArrayList();
+										//	vals = describeSensor(it.next());
+										//输出至web
+										out.println("<tr><td></td><td></td><td>"+it.next()+"</td><td></td><td></td></tr>");
+									}
+				%>
+			</table>
+		</div>
+	</div>
+</body>
+
+<footer>
+
+</footer>
+
+</html>

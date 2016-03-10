@@ -1,0 +1,33 @@
+<%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
+<%@ page import="SOS.*"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+
+<script language="javascript">
+
+</script>
+</head>
+
+<body>
+<a href="http://localhost:83/">返回</a>
+<% 
+//code for server
+String path="C:/Program Files/apache-tomcat-7.0.41-windows-x64/apache-tomcat-7.0.41/webapps/Register/WebContent/Modeling/SimpleRegister/";
+//Code for Echo
+//String path="D:/Program Files/Apache Software Foundation/apache-tomcat-6.0.35/webapps/SHU_SOSplatform_/WebContent/Modeling/SimpleRegister/";
+String filename="Shu_Insitu_Temperature_S-2.xml";
+String charset="utf-8";
+	StreamXML read=new StreamXML();
+// 	readXML read=new readXML();
+	String s=read.getString(path,filename,charset);
+//	String s=read.getString(path,filename);
+	//输出到jsp中
+	JspWriter mout=pageContext.getOut();
+	mout.print("<br>"+s);
+%>
+<p>1</p>
+</body>
+</html>

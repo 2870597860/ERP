@@ -1,0 +1,370 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<head>
+<title>新建原位传感器模型</title>
+    <style type="text/css">
+		.H1{color:#0F9; margin:0; padding:0;  font-size:25px; font-weight:bold; width:100%; vertical-align:middle}
+		.H2{color:#0F9; margin:0; padding:0; position:absolute; top:1%; left:34%; font-size:25px; font-weight:bold}
+		.H3{color:#0F9; margin:0; padding:0; position:absolute; top:1%; left:67%; font-size:25px; font-weight:bold}
+		.Structure{position:relative}
+		.tall{height:500px;top:0px; margin-top:0px}
+		.text{ text-align:right}
+		.id{position:relative; width:18%; float:left}
+		.idName{ text-align:center;width:18%;float:left; font-size:12px; vertical-align:bottom}
+		.float{float:left;}
+		.position{float:left; position:absolute;left:10%}
+		.position2{float:left; position:absolute;left:44%}
+		.position3{float:left; position:absolute;left:75%}
+		.output{ position:absolute;display:none;left:40%; top:30%; background-color:#36F; border:3px solid #F0C; color:#FF6}
+    </style>                                                                               
+    	
+</head>
+<body>
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+		<tr>
+        	<td>
+            	<center>NewInsitu</center>
+			  <select onchange="RegisterType()" name="RegisterType" id="RegisterType">
+                	<option value="QuickRegister" selected="selected">快速注册</option>
+                    <option value="AllRegister">全信息注册</option>
+              </select>
+				<font size="-2">注：带<font color="#FF0000">*</font>项为必填项</font>
+              <form name="NewInsitu" action="NewInsitu.asp" method="post">
+        		<div class="Structure">
+                	<table width="100%" border="1">
+                    	<tr height="500">
+                        	<td width="33%">
+                       		  <div class="tall">
+                            	<table border="0" height="100%" width="100%">
+                                	<tr height="5%">
+                            			<td >
+                                        	<div class="H1">(1)标识信息：</div><hr />
+                                        </td>
+                                	</tr>
+                                    <tr height="15%">
+                                    	<td>
+                                            <div class="float">
+                                            	<font color="#FF0000">*</font>标识号：<br />
+                                            </div>
+                                                <div class="idName">组织标识</div> <div class="idName">类型标识</div> 
+                                                <div class="idName">传感器类型</div><div class="idName">传感器ID</div> <br />
+                                          		<div class="id">&nbsp;</div>
+                                                <input class="id" type="text" id="Org" name="Org" placeholder="Shu" value="Shu" required="required"/>
+                                                <input class="id" type="text" id="SenserType" placeholder="Insitu" value="Insitu" required="required"/>
+                                                <input class="id" type="text" id="Property" placeholder="Temp&Humi" value="Temperature" required="required"/>
+                                                <input class="id" type="text" id="ID" placeholder="S-1" value="S-1" required="required"/>
+                                           <div class="float" style="width:18%">
+                                           		<input type="button" id="EnsureID" name="EnsureID" value="生成ID" onclick="GenerateID()" style="width:60px"/>
+                                           </div>
+                                           <div  class="float"> 
+                                           		<input type="text" id="SensorID" name="SensorID" placeholder="请生成ID！" 
+                                                	value=""  style="color:#F00 ;width:300px" readonly="readonly"/>  
+                                           </div>
+                                      </td>
+                                </tr>
+                                    <tr >
+                                    	<td>
+                                        	<hr />
+                                        	<div class="float">
+                                            <font color="#FF0000">*</font>传感器全称：</div>
+                                            <div class="position">
+                                            	<input type="text" id="FullName" name="FullName" placeholder="上海大学原位温度传感器S-1号" 
+                                                	value="上海大学原位温度传感器S-1号" style="width:200px" required="required"/>
+                                            </div>
+                                        </td>	
+                                    </tr>
+                                    <tr>
+                                    	<td>
+                                        	<hr />
+                                        	<div class="float"><font color="#FF0000">*</font>传感器简称：</div>
+                                        	<div class="position">
+                                            	<input type="text" id="ShortName" name="ShortName" placeholder="温度传感器1号"
+                                                 value="温度传感器1号" style="width:200px" required="required"/></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                    	<td>
+                                        	<hr />
+                                        	<div class="float">传感器类型：</div><div class="position">
+                                        	  <select name="TypeSelect" id="TypeSelect" >
+                                        	    <option selected="selected" value="">请选择传感器类型</option>
+                                        	    <option value="insitu">原位传感器</option>
+                                        	    <option value="move">移动传感器</option>
+                                        	    <option value="video">视频传感器</option>
+                                      	    </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                    	<td>
+                                        	<hr />
+                                        	<div class="float">观测属性：</div>
+                                            <div class="position">	
+                                             <select name="PropertySelect" id="PropertySelect"> 			
+                                            		<option selected="selected" value="">请选择传感器观测属性</option>
+                                            		<option value="temp">温度</option>
+                                            		<option value="humi">湿度</option>
+                                            		<option value="pm10">PM10</option>
+                                            </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                    	<td>
+                                        	<hr />
+                                        	<div class="float">传感器描述:</div>
+                                        	 <center> 
+                                             <textarea name="Description" id="Description" placeholder="请输入关于传感器的描述：" 
+                                              cols="40" rows="6"></textarea></center>
+                                        </td>
+                                    </tr>
+                                </table>
+                                </div>
+                            </td>
+                        	<td width="34%">
+                            	<div class="tall">
+                            	<table  height="500px" width="100%">
+                                <tr height="5%">
+                                	<td>
+                            			<div class="H1">(2)特征能力信息：</div><hr />
+                            		</td>
+                            	</tr>
+                                <tr height="50%">
+                                	<td>
+                                    	<table>
+                                        	<tr>
+                                            	<td>
+                                                	<font size="+1" color="#FFCC99">观测能力</font>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                            	<td>
+                                            	<div class="float">
+                                                	<font color="#FF0000">*</font>观测范围：
+                                                </div>
+                                                <div class="position2">
+                                                <input id="MeasureRange1" name="MeasureRange1" type="text" style="width:50px" value="1" required="required"/>
+                                                至
+                                                <input id="MeasureRange2" name="MeasureRange2" type="text" style="width:50px" value="1" required="required"/>
+                                                单位：
+                                                <input id="Uom1" name="Uom1" type="text" style="width:50px" value="1" required="required"/>
+                                                </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                            	<td>
+                                                	<div class="float"><font color="#FF0000">*</font>测量精度：
+                                                    </div>
+                                                    <div class="position2">
+                                                    	<input id="Certainty" name="Certainty" type="text" style="width:105px" value="1" required="required"/>                                                        &nbsp;&nbsp;单位：
+                                                        <input  id="Uom2" name="Uom2" type="text" style="width:50px" value="1" required="required"/>
+                                                   	</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                            	<td>
+                                                	<div class="float"><font color="#FF0000">*</font>测量时间间隔：
+                                                    </div>
+                                                    <div class="position2">
+                                                    <input name="Interval" id="Interval" type="text" style="width:105px" value="1" required="required"/>
+                                                    &nbsp;&nbsp;单位：
+                                                    <input  id="Uom3" name="Uom3" type="text" style="width:50px" value="1" required="required"/>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <hr />
+                                        <table>
+                                        	<tr>
+                                            	<td>
+                                                	<font size="+1" color="#FFCC99">传感器位置</font>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                            	<td>
+                                                	<font color="#FF0000">*</font>经度：
+                                                    <input id="Longitude" name="Longitude" type="text" style="width:100px" value="1" required="required" />
+                                                    (deg)<br />
+                                                    <font color="#FF0000">*</font>纬度：
+                                                    <input id="Latitude" name="Latitude" type="text" style="width:100px" value="1" required="required"/>
+                                                    (deg)<br />
+                                                   <font color="#FF0000">*</font>高度：
+                                                   <input id="Position_Height" name="Position_Height" type="text" 
+                                                   		style="width:100px"  value="1" required="required"/>
+                                                    (m)<br />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <hr />
+                                    </td>
+                                </tr>
+                                <tr height="5%">
+                                	<td>
+                                    	<font size="+1" color="#FFCC99">传感器输出信息</font>
+                                        <input type="button" onclick="AddOutput()" value="添加"/>
+                                        <input type="button"  onclick="DeleteOutput()"value="删除"/>
+                                        <font color="#FF0000" id="note1" size="-1">*请至少添加一个传感器输出属性</font>
+                                  		<div id="output" class="output">
+                                    	<table >
+                                        	<tr>
+                                            	<td>
+                                                	添加输出<font size="-1" color="#66FF33">(请使用英文)</font><br />
+                                                    输出名称：<input type="text" id="property" name="property" placeholder="WindSpeed" value="WindSpeed"/><br />
+                                                    输出单位：<input type="text" id="uom" name="uom" placeholder="m/s" value="m/s" /><br />
+                                                   <center> <input type="button"  onclick="EnsureOutput()" value="确定"/>
+                                                   			<input type="button" onclick="CancelOutput()" value="取消"/>
+                                                   </center>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                   		</div>
+                                    </td>
+                                </tr>
+                                
+                                <tr height="30%">
+                                	<td>
+                                    	<input type="text" id="Output1" name="Output1" style="width:300px" readonly="readonly"/><br />
+                                    	<input type="text" id="Output2" name="Output2" style="width:300px" readonly="readonly"/><br />
+                                    	<input type="text" id="Output3" name="Output3" style="width:300px" readonly="readonly"/><br />
+                                    	<input type="text" id="Output4" name="Output4" style="width:300px" readonly="readonly"/><br />
+                                    	<input type="text" id="Output5" name="Output5" style="width:300px" readonly="readonly"/><br />
+   
+                                    </td>
+                                </tr>
+                                <tr height="5%">
+                                	<td align="center">
+                                     <hr />
+                                    	<input type="submit" value="保存"/>
+                                        <input type="button" value="放弃" onclick="javascript:window.location.reload()"/>
+                                        <input type="button" value="查看当前建模文档" onclick="CheckRegister()" />
+                                    </td>
+                                </tr>
+                            	</table>
+                           		</div>
+                            </td>
+                        	<td width="33%">
+                            	<div class="tall">
+                                	<table height="100%" width="100%">
+                                    	<tr height="5%">
+                                        	<td>
+                        				    	<div class="H1">(3)联系信息：</div><hr />
+                                			</td>
+                                		</tr>
+                                        <tr height="55%">
+                                        	<td>
+                                            	<div class="float"><font color="#FF0000">*</font>管理者姓名：</div>
+                                                <div class="position3">
+                                                	<input id="ManagerName" name="ManagerName" type="text" required="required" value="1"/></div><br />
+                                                <hr color="#FFFFFF" width="0" />
+                                                <div class="float"><font color="#FF0000">*</font>单位：</div>
+                                                <div class="position3">
+                                                	<input type="text" id="Unit" name="Unit" required="required" value="1"/></div><br />
+                                                <hr color="#FFFFFF" width="0" />
+                                                <div class="float"><font color="#FF0000">*</font>电话：</div>
+                                                <div class="position3">
+                                                	<input id="Telephone" name="Telephone" type="text" required="required" value="1"/></div><br />
+                                                <hr color="#FFFFFF" width="0" />
+                                                <div class="float">通信地址：</div><div class="position3">
+                                               	 	<input type="text" id="Address" name="Address"/></div><br />
+                                                <hr color="#FFFFFF" width="0" />
+                                                <div class="float">城市：</div><div class="position3">
+                                               		<input type="text" id="City" name="City"/></div><br />
+                                                <hr color="#FFFFFF" width="0" />
+                                                <div class="float"> 国家：</div><div class="position3">
+                                                	<input type="text" id="Country" name="Country"/></div><br />
+                                                <hr color="#FFFFFF" width="0" />
+                                                <div class="float"> 邮编：</div><div class="position3">
+                                                	<input type="text" id="PostCode" name="PostCode"/></div><br />
+                                                <hr color="#FFFFFF" width="0" />
+                                                <div class="float"> 电子邮箱：</div><div class="position3">
+                                                	<input type="text" id="Email" name="Email"/></div><br />   
+                                                <hr color="#FFFFFF" width="0" />
+                                            </td>
+                                        </tr>
+                                        <tr height="40%">
+                                        	<td>&nbsp;
+                                            
+                                          </td>
+                                        </tr>
+                            		</table>
+                            	</div>
+                            </td>
+                        </tr>
+          </table>
+        </div>
+        <input type="hidden" id="Output1_Name" name="Output1_Name" /><input type="hidden" id="Output1_Uom" name="Output1_Uom" />
+        <input type="hidden" id="Output2_Name" name="Output2_Name" /><input type="hidden" id="Output2_Uom" name="Output2_Uom" />
+        <input type="hidden" id="Output3_Name" name="Output3_Name" /><input type="hidden" id="Output3_Uom" name="Output3_Uom" />
+        <input type="hidden" id="Output4_Name" name="Output4_Name" /><input type="hidden" id="Output4_Uom" name="Output4_Uom" />
+        <input type="hidden" id="Output5_Name" name="Output5_Name" /><input type="hidden" id="Output5_Uom" name="Output5_Uom" />
+        <input type="hidden" id="outputCount" name="outputCount"  />
+        <input type="hidden" id="SensorID_Name" name="SensorID_Name"/>
+       
+             </form>
+            </td>
+        </tr>
+</table>
+
+</body>
+                              
+ <script language="javascript">
+  var outputCount=0;
+ document.getElementById("outputCount").value="0";
+ for(i=1;i<6;i++){
+document.getElementById("Output"+i).value="";
+ }
+ 	function GenerateID(){
+		var Org=document.getElementById("Org").value;
+		var SenserType=document.getElementById("SenserType").value;
+		var Property=document.getElementById("Property").value;
+		var ID=document.getElementById("ID").value;
+		document.getElementById("SensorID").value="urn:"+Org+":"+SenserType+":"+Property+":"+ID;
+		document.getElementById("SensorID_Name").value=Org+"_"+SenserType+"_"+Property+"_"+ID;
+
+		}
+		
+	function EnsureOutput(){
+			outputCount++;
+			document.getElementById("outputCount").value=outputCount;
+			document.getElementById("Output"+outputCount+"_Name").value=document.getElementById("property").value;
+			document.getElementById("Output"+outputCount+"_Uom").value=document.getElementById("uom").value;
+			document.getElementById("Output"+outputCount).value="输出属性"+outputCount+"："+document.getElementById("property").value+"   单位："+document.getElementById("uom").value;
+			
+			document.getElementById("output").style.display="none";
+			if(outputCount>0) 
+				document.getElementById("note1").innerHTML=" ";
+		}
+	function DeleteOutput(){
+			document.getElementById("Output"+outputCount).value="";
+			document.getElementById("Output"+outputCount+"_Name").value="";
+			document.getElementById("Output"+outputCount+"_Uom").value="";
+			outputCount--;
+			document.getElementById("outputCount").value=outputCount;
+			if(outputCount==0) 
+				document.getElementById("note1").innerHTML="*请至少添加一个传感器输出属性";
+		}
+	function AddOutput(){
+						if(outputCount>4){
+				alert("最多添加5个输出，请联系管理人员！");
+				document.getElementById("output").style.display="none";
+			}else{
+			document.getElementById("output").style.display="block";
+		}}
+	function CancelOutput(){
+		document.getElementById("output").style.display="none";
+		}
+	function CheckRegister()
+		{
+			window.open("SimpleModel.asp","_self");
+			}
+	function RegisterType(){
+			if(document.getElementById("RegisterType").value=="QuickRegister"){
+			window.open("NewInsitu.html","_self")}
+			else 
+				if(document.getElementById("RegisterType").value=="AllRegister"){
+				window.open("NewInsitu_All.html","_self")}
+		}
+ </script>    
+</html>

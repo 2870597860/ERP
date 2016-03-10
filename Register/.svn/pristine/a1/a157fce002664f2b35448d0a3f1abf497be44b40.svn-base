@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    	<link rel="icon" href="pic/favicon.ico" type="image/x-icon"/>
+    	<link rel="stylesheet" type="text/css" href="css/Reset.css"/>
+    	<link rel="stylesheet" type="text/css" href="css/main.css"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>SHUSVI传感器建模</title>
+        <script type="text/javascript" src="javascript/jquery-1.4.1.min.js"></script>
+        <script type="text/javascript" src="javascript/functions.js"></script>
+    </head>
+<body text="blue">   
+<div class="header">
+<table width="420" border="0" align="center" cellpadding="0" cellspacing="0" style="font-size:15px">
+    	<tr>
+      	  <td width="20%" >
+            <div align="center" id="Tdiv_1" class="menubar" onmouseover="divControl(1,1)">传感器建模</div>
+            </td>
+           <td width="20%">
+            <div align="center" id="Tdiv_2" class="menubar" onmouseover="divControl(1,2)">传感器注册</div>
+            </td>
+            <td width="20%">
+            <div align="center" id="Tdiv_3" class="menubar"><a href="sensorLinkControl/sensorLink.jsp">传感器连接</a></div>
+            </td>
+            <td width="20%">
+            <div align="center" id="Tdiv_4" class="menubar"><a href="http://www.baidu.com">传感器检索</a></div>
+            </td>
+        </tr>
+        <tr>
+        	<td width="20%">
+            	<div align="left" id="Div1" class="menu" onmouseenter="divControl(1,1)" onmouseleave="hidediv()">
+                    <div onmouseover="show('insitu')">原位传感器模型</div>
+                    <div id="insitu" class="menu3" style="margin-left:12px;">
+	                    <a href="Modeling\NewInsitu.html">新建</a>
+	                    <a href="http:\\localhost:83\Register\WebContent\Modeling\ChangeInsitu.asp">修改</a>
+	                    <a href="http:\\localhost:83\Register\WebContent\Modeling\BasedInsitu.asp">再建</a><br />
+                    </div>
+                    <div onmouseover="show('move')">移动传感器模型</div>
+                    <div id="move" class="menu3"  style="margin-left:12px;">
+	                    <a href="Modeling\NewMove.html">新建</a>
+	                    <a href="Modeling\ChangeMove.html">修改</a>
+	                    <a href="Modeling\BasedMove.html">再建</a><br />
+                    </div>
+                    <div onmouseover="show('video')">视频传感器模型</div>
+                    <div id="video" class="menu3" style="margin-left:12px;">
+	                    <a href="Modeling\NewVideo.html">新建</a>
+	                    <a href="Modeling\ChangeVideo.html">修改</a>
+	                    <a href="Modeling\BasedVideo.html">再建</a><br />
+                    </div>
+                </div>
+            </td>
+        	<td width="20%">
+            	<div align="left" id="Div2" class="menu" onmouseenter="divControl(1,2)" onmouseleave="hidediv()">
+	                <a href="http://localhost:84/Register/WebContent/Register/Registed_Sensor.jsp">查看已注册传感器</a><br />
+	                <a href="http://localhost:83/Register/WebContent/Register/RegisterSensor.asp">注册新传感器</a><br />
+	                <a href="http://www.baidu.com">与模型同步</a><br />      
+                </div>
+            </td>
+            <td width="20%">
+            </td>
+            <td width="20%">
+            </td>
+        </tr>
+    </table>
+    <div class="permission">
+    	<img src="pic/permission.jpg">
+    </div>
+</div>
+<hr style="margin:1;border:2"/>
+<div class="body_div">
+	<div class="photo_show left">
+		<span><img src="pic/PhotoShow1.jpg" class="photo"></span>
+	</div>
+	<div class="login left">
+		<form action="" method="" id="login">
+			<div class="loginTitle">登陆</div>
+			<div class="userName">
+				<span class="loginMsg left">用户名：</span><input type="text" class="loginInput" name="userName">
+			</div>
+			<div class="password">
+				<span class="loginMsg left">密码：</span><input type="password" class="loginInput" name="password">
+			</div>
+			<div class="notice">
+				<span><input type="checkbox" name="rememberPwd">记住密码   </span><span>忘记密码</span>
+			</div>
+			<div class="sub_res">
+				<div class="sub_res_blank left"></div>
+				<input type="button" value="登陆" class="left login_btn"><input type="reset" value="重置" class="left reset_btn">
+			</div>
+			<div class="clear"></div>
+		</form>
+	</div>
+	<div class="success hide">
+		<span>登陆成功</span>
+		<input type="button" value="确定"/>
+	</div>
+	<div class="clear"></div>
+</div>
+<script type="text/javascript">
+	loginPermission=false;
+	window.onload=function(){
+		opacityCount=0;opacityPer="0.01";state="fadeIn";photoNum=1;
+		var s=setInterval("startChange()",50);
+		if(loginPermission==true){
+			$(".permission").addClass("hide");
+		}
+		$.ajax({
+			type: "GET",
+			dataType: "html",
+			url: "http://localhost:84/Register/WebContent/loginCheck.jsp",
+			data: "",
+			success: function(msg){
+				    if(msg==0){
+				    }else{
+						$(".permission").addClass("hide");
+						$(".login").addClass("hide");
+				    }
+			},
+			error:function(msg){
+				alert("error:"+msg.responseText);
+			}
+		});
+	};
+	
+	function login(){
+		var ajaxUrl="http://localhost:84/Register/WebContent/login.jsp";	
+		$.ajax({
+			type: "POST",
+			dataType: "html",
+			url: ajaxUrl,
+			data: $("#login").serialize(),
+			success: function(data){
+				if(data==0){
+					alert("账号或密码错误，请重新输入");
+				}else{
+					$(".success").removeClass("hide");
+					$(".success").addClass("show");
+					$(".permission").addClass("none");
+					loginPermission=true;
+					$(".login").addClass("hide");
+					window.location.reload();
+				}
+			},
+			error:function(data){
+				alert("error:"+data.responseText);
+			}
+		});
+	}
+	$("#login .login_btn").click(function(){
+		login();
+	});
+	$(".loginInput").keyup(function(){
+		if(window.event.keyCode == 13){
+			login();
+		}
+	});
+</script>
+<script type="text/javascript" src="javascript/index.js"></script>
+</body>
+
+</html>

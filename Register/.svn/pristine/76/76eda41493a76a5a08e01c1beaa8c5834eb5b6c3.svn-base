@@ -1,0 +1,48 @@
+<%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
+<%@  page import="SOS.Register.*"%>
+<%@ page import="java.io.*"%>
+
+<%@ page import="java.lang.*"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+
+<script language="javascript">
+
+</script>
+</head>
+
+<body>
+<a href="http://localhost:8081/WebContent/">返回</a>
+<%
+/*
+@Echo，接收RegisterSensor.asp发来的注册传感器参数
+接收字符串如：/RegisterSensor.jsp?name_3=Shu_Insitu_Temperature_S-2.xml&name_4=Shu_Insitu_Temperature_S-4.xml&name_5=Shu_Insitu_Temperature_S-5.xml
+将“？”之后的字符串提取出来 request.getQueryString()， 		参数msg:get过来的字符串
+再用&分开，可在此获取注册传感器的个数
+用=分开，获得待注册传感器名字
+注册传感器
+*/
+	String msg=request.getQueryString();
+	//out.print(msg);
+	String[] IDName=msg.split("&");
+	int nameCount=IDName.length;
+	out.print(nameCount+"\n");
+	out.print("IDName[0]:"+IDName[0]+"\n");
+	String nameStr="";
+	for(int i=0;i<nameCount;i++)
+	{
+		nameStr=nameStr+IDName[i].split("=")[1]+";";
+	}
+	out.print("nameStr:"+nameStr);
+	String[] names=nameStr.split(";");
+	for(int i=0;i<nameCount;i++)
+	{
+		RegisterSensor rs=new RegisterSensor("http://202.121.197.111:84/SOS_E/sos",names[i]);
+		rs.reques();
+	}
+%>
+</body>
+</html>

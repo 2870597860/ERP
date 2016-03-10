@@ -1,0 +1,150 @@
+﻿<sml:SensorML version="1.0.1" xsi:schemaLocation="http://www.opengis.net/sensorML/1.0.1 http://schemas.opengis.net/sensorML/1.0.1/sensorML.xsd" xmlns="http://www.opengis.net/sensorML/1.0.1" xmlns:sml="http://www.opengis.net/sensorML/1.0.1" xmlns:gml="http://www.opengis.net/gml" xmlns:swe="http://www.opengis.net/swe/1.0.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <sml:member>
+    <sml:System gml:id="InsituSensor">
+      <gml:description>用于测试传感器描述</gml:description>
+      <gml:name>地面原位传感器 </gml:name>
+      <sml:identification>
+        <sml:IdentifierList>
+          <sml:identifier name="标识码">
+            <sml:Term definition="urn:ogc:def:identifier:OGC:1.0:uniqueID">
+              <sml:value>Urn:Shu:Insitu:Temperature:S-3</sml:value>
+            </sml:Term>
+          </sml:identifier>
+          <sml:identifier name="全称">
+            <sml:Term definition="urn:ogc:def:identifier:OGC:1.0:longName">
+              <sml:value>上海大学原位温度传感器S-1号</sml:value>
+            </sml:Term>
+          </sml:identifier>
+          <sml:identifier name="简称">
+            <sml:Term definition="urn:ogc:def:identifier:OGC:1.0:shortName">
+              <sml:value>温度传感器1号</sml:value>
+            </sml:Term>
+          </sml:identifier>
+        </sml:IdentifierList>
+      </sml:identification>
+      <sml:classification>
+        <sml:ClassifierList>
+          <sml:classifier name="传感器类型">
+            <sml:Term definition="urn:ogc:def:classifier:OGC:1.0:sensorType">
+              <sml:value>原位传感器</sml:value>
+            </sml:Term>
+          </sml:classifier>
+          <sml:classifier name="传感器观测属性">
+            <sml:Term definition="urn:ogc:def:classifier:OGC:1.0:sensorType">
+              <sml:value>温度</sml:value>
+            </sml:Term>
+          </sml:classifier>
+        </sml:ClassifierList>
+      </sml:classification>
+      <sml:capabilities>
+        <swe:DataRecord definition="urn:ogc:def:property:Liesmars:measurementCapabilities">
+          <swe:field name="观测精度范围">
+            <swe:QuantityRange definition="urn:ogc:def:property:measurementRMSRange">
+              <swe:uom code="摄氏度" />
+              <swe:value>-100 100</swe:value>
+            </swe:QuantityRange>
+          </swe:field>
+          <swe:field name="观测精度">
+            <swe:Quantity definition="urn:ogc:def:property:measurementRMS">
+              <swe:uom code="摄氏度" />
+              <swe:value>1 </swe:value>
+            </swe:Quantity>
+          </swe:field>
+          <swe:field name="观测周期">
+            <swe:Quantity definition="urn:ogc:def:property:measurementInterval">
+              <swe:uom code="分钟"/>
+              <swe:value>10</swe:value>
+            </swe:Quantity>
+          </swe:field>
+        </swe:DataRecord>
+      </sml:capabilities>
+      <sml:contact  xlink:arcrole="urn:ogc:def:role:operator" >
+        <sml:ResponsibleParty>
+          <sml:organizationName>上海大学</sml:organizationName>
+          <sml:contactInfo>
+            <sml:phone>
+              <sml:voice>15201933***</sml:voice>
+            </sml:phone>
+            <sml:address>
+              <sml:deliveryPoint>上海大学通信学院</sml:deliveryPoint>
+              <sml:city>上海</sml:city>
+              <sml:administrativeArea>Echo</sml:administrativeArea>
+              <sml:postalCode>200040</sml:postalCode>
+              <sml:country>中国</sml:country>
+              <sml:electronicMailAddress>XXX@163.com</sml:electronicMailAddress>
+            </sml:address>
+          </sml:contactInfo>
+        </sml:ResponsibleParty>
+      </sml:contact>
+      <sml:position name="传感器位置">
+        <swe:Position fixed="false" referenceFrame="urn:ogc:def:crs:EPSG:4329">
+          <swe:location>
+            <swe:Vector definition="urn:ogc:def:property:OGC:location">
+              <swe:coordinate name="纬度">
+                <swe:Quantity axisID="y" definition="urn:ogc:def:property:OGC:latitude">
+                  <swe:uom code="deg" />
+                  <swe:value>121.39932</swe:value>
+                </swe:Quantity>
+              </swe:coordinate>
+              <swe:coordinate name="经度">
+                <swe:Quantity axisID="x" definition="urn:ogc:def:property:OGC:longitude">
+                  <swe:uom code="deg" />
+                  <swe:value>31.3168071</swe:value>
+                </swe:Quantity>
+              </swe:coordinate>
+              <swe:coordinate name="高度">
+                <swe:Quantity axisID="z" definition="urn:ogc:def:property:OGC:altitude">
+                  <swe:uom code="m" />
+                  <swe:value>10</swe:value>
+                </swe:Quantity>
+              </swe:coordinate>
+            </swe:Vector>
+          </swe:location>
+        </swe:Position>
+      </sml:position>
+      <sml:interfaces>
+        <sml:InterfaceList>
+          <sml:interface name="BaoxieWeatherStation-LVDSC12_SOS">
+            <sml:InterfaceDefinition>
+              <sml:serviceLayer>
+                <swe:DataRecord definition="urn:ogc:def:interface:OGC:1.0:SWEServiceInterface">
+                  <swe:field name="urn:ogc:def:interface:OGC:1.0:ServiceURL">
+                    <swe:Text>
+                      <swe:value>http://202.121.197.111:84/SOS_E/sos</swe:value>
+                    </swe:Text>
+                  </swe:field>
+                  <swe:field name="urn:ogc:def:interface:OGC:1.0:ServiceType">
+                    <swe:Text>
+                      <swe:value>SOS</swe:value>
+                    </swe:Text>
+                  </swe:field>
+                  <swe:field name="urn:ogc:def:interface:OGC:1.0:ServiceSpecificSensorID">	
+                    <swe:Text>
+						 <swe:value>urn:liesmars:insitusensor:BaoxieWeatherStation-LVDSC12</swe:value>
+                    </swe:Text>
+                  </swe:field>
+                </swe:DataRecord>
+              </sml:serviceLayer>
+            </sml:InterfaceDefinition>
+          </sml:interface>
+        </sml:InterfaceList>
+      </sml:interfaces>
+      <sml:outputs>
+        <sml:OutputList>
+          <sml:output name="WindSpeed">
+            <swe:Quantity definition="urn:ogc:def:property:OGC:1.0:soilHumidity">
+			  <gml:metaDataProperty>
+			 	<offering>
+				  <id>SHUSVI</id>
+				  <name>上海大学视频与空间信息学科组 </name>
+				</offering>
+			  </gml:metaDataProperty>
+              <swe:uom code="m/s" />
+            </swe:Quantity>
+          </sml:output>
+        </sml:OutputList>
+      </sml:outputs>
+      <sml:components />
+    </sml:System>
+  </sml:member>
+</sml:SensorML>

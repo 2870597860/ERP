@@ -1,0 +1,145 @@
+		.menubar{position:absolute;top:10px;width:100px;height:20px;cursor:default;
+	    border-width:1px;border-style:outset;color:#99FFFF;background:#669900;border-radius:5px;}
+		.menu{position:absolute;top:30px;width:150px;display:none;border-width:1px;
+		border-style:outset;border-color:white silver silver white;background:#4A5AF5;padding:15px; color:#99FFFF;
+		border-radius:10px;margin-left:-22px;font-size:0.9em}
+		.menu A{text-decoration;none;color:#99ffff;}
+		.menu A:hover{color:#99FFFF;}
+		.menu a:visited{color:#99FFFF;text-decoration:none;}
+		.menu a:link{color:#99FFFF;text-decoration:none;}
+		.menubar a:visited{color:#99FFFF;text-decoration:none;}
+		.menubar a:link{color:#99FFFF;text-decoration:none;}
+		.menu3{display:none;}
+		.menu3 a:visited{color:#FF6;text-decoration:none;}
+		.menu3 a:link{color:#FF6;text-decoration:none;}
+.clear {
+	clear: both;
+}
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
+.hide {
+	visibility: hidden;
+}
+.show {
+	visibility: visible;
+}
+.none {
+	display: none;
+}
+body{
+	background-image:url("../pic/background.jpg");
+	background-size:cover;
+}
+.header{
+	width:100%;
+	height:130px;
+}
+.permission {
+	position:absolute;
+	width:100%;
+	height:130px;
+	background:black;
+	z-index:100;
+	opacity:0.4;
+}
+.permission img {
+	width: 100%;
+	height: 100%;
+}
+.body_div {
+	width: 100%;
+	height: 800px;
+	
+}
+.photo_show {
+	margin-left: 5%;
+	margin-top: 14%;
+}
+.photo{
+	opacity:0;
+}
+.login{
+	margin-left:20%;
+	margin-top:16%;
+	width:30%;
+	height:240px;
+	background:rgba(255,255,255,0.3);
+	border-radius:40px;
+}
+.loginTitle{
+	width:100%;
+	height:80px;
+	line-height:80px;
+	font-size:30px;
+	text-align:center;
+	color:grey;
+}
+.userName,.password{
+	margin-bottom: 10px;
+}
+.loginMsg{
+	display: block;
+	width: 25%;
+	text-align: right;
+	margin-left: 10%;
+}
+.loginInput{
+	display: block;
+	width: 50%;
+}
+.notice{
+	font-size: 0.7em;
+	color: grey;
+	text-align:center;
+}
+.sub_res{
+	text-align:center;
+	margin-top:0.5em;
+}
+.sub_res_blank{
+	width:2em;
+}
+.sub_res input{
+	display:block;
+	height:2em;
+	width:5em;
+	font-size:1em;
+	border-radius:0.5em;
+}
+.login_btn{
+	margin-left:6em;
+	background:lightgreen;
+}
+.reset_btn{
+	margin-left:2.5em;
+}
+
+.success{
+	position:absolute;
+	left:50%;
+	top:30%;
+	margin-left:-128px;
+	height:20%;
+	width:20%;
+	color:black;
+	line-height:100px;
+	text-align:center;
+	font-size:2em;
+	border-radius:25px;
+	background:lightblue;
+	opacity: 0.6;
+}
+.success input{
+	display:block;
+	position:absolute;
+	height:20%;
+	width:30%;
+	top:70%;
+	left:50%;
+	margin-left:-15%;
+	font-size:0.7em;
+}

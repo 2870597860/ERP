@@ -1,0 +1,99 @@
+		.menubar{position:absolute;top:10px;width:100px;height:20px;cursor:default;
+	    border-width:1px;border-style:outset;color:#99FFFF;background:#669900;border-radius:5px;}
+		.menu{position:absolute;top:30px;width:120px;display:none;border-width:1px;
+		border-style:outset;border-color:white silver silver white;background:blue;padding:15px; color:#99FFFF;
+		border-radius:10px;margin-left:-22px;}
+		.menu A{text-decoration;none;color:#99ffff;}
+		.menu A:hover{color:#99FFFF;}
+		.menu a:visited{color:#99FFFF;text-decoration:none;}
+		.menu a:link{color:#99FFFF;text-decoration:none;}
+		.menubar a:visited{color:#99FFFF;text-decoration:none;}
+		.menubar a:link{color:#99FFFF;text-decoration:none;}
+		.menu3{display:none;}
+		.menu3 a:visited{color:#FF6;text-decoration:none;}
+		.menu3 a:link{color:#FF6;text-decoration:none;}
+.clear{
+	clear:both;
+}
+.left{
+	float:left;
+}
+.right{
+	float:right;
+}
+body{
+	background-image:url("../pic/background.jpg");
+	background-size:cover;
+}
+.header{
+	width:100%;
+	height:130px;
+}
+
+.body_div{
+	width:100%;
+	height:800px;
+	
+}
+.photo_show{
+	margin-left:150px;
+	margin-top:40px;
+}
+.photo{
+	opacity:0;
+}
+.login{
+	margin-left:100px;
+	margin-top:80px;
+	width:400px;
+	height:220px;
+	background:rgba(255,255,255,0.3);
+	border-radius:40px;
+}
+.loginTitle{
+	width:100%;
+	height:80px;
+	line-height:80px;
+	font-size:30px;
+	text-align:center;
+	color:grey;
+}
+.userName,.password{
+	margin-bottom: 10px;
+}
+.loginMsg{
+	display: block;
+	width: 75px;
+	text-align: right;
+	margin-left: 75px;
+}
+.loginInput{
+	display: block;
+	width: 150px;
+}
+.notice{
+	font-size: 0.7em;
+	color: grey;
+	text-align:center;
+}
+.sub_res{
+	text-align:center;
+	margin-top:0.5em;
+}
+.sub_res_blank{
+	width:2em;
+}
+.sub_res input{
+	display:block;
+	height:2em;
+	width:5em;
+	font-size:1em;
+	border-radius:0.5em;
+}
+.login_btn{
+	margin-left:6em;
+	background:lightgreen;
+}
+.reset_btn{
+	margin-left:2.5em;
+}
